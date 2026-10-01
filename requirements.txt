@@ -1,0 +1,8 @@
+# Full local-development environment.
+# Deploy each service with its own requirements file instead.
+
+-r app/requirements.txt
+-r ui/requirements.txt
+-r mcp_server/requirements.txt
+-r rag_service/requirements.txt
+-r requirements-dev.txt

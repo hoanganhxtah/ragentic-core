@@ -1,0 +1,31 @@
+# FastAPI backend and configuration
+fastapi
+uvicorn[standard]
+pydantic>=2.0
+pydantic-settings>=2.0
+python-dotenv
+truststore
+
+# Agent orchestration and tools
+langchain
+langchain-core
+langgraph
+langchain-tavily
+langchain-mcp-adapters
+
+# Supported LLM providers
+langchain-google-genai
+langchain-openai
+langchain-anthropic
+langchain-groq
+langchain-aws
+
+# HTTP client — dùng để gọi rag_service (retrieval là microservice riêng, xem
+# rag_service/README.md). app/ không còn mở vector store hay load embedding
+# model nào — những dependency đó (torch, sentence-transformers, qdrant-client,
+# chromadb, docling...) chỉ còn trong rag_service/requirements.txt.
+httpx
+
+# Optional PostgreSQL conversation history
+asyncpg
+sqlalchemy[asyncio]

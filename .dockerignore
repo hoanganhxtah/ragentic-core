@@ -1,0 +1,39 @@
+# Version control and editor metadata
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Python bytecode, caches, and local environments
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Tests, logs, and generated artifacts
+tests/
+*.log
+*.zip
+dist/
+build/
+*.egg-info/
+
+# Docker and OS metadata not needed by the image
+Dockerfile*
+docker-compose*.yml
+docker-compose*.yaml
+.dockerignore
+.DS_Store
+Thumbs.db
