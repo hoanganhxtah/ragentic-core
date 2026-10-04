@@ -59,7 +59,16 @@ async def _save_turn_simple(
 @router.post("/agent", response_model=AgentResponse)
 async def agent_endpoint(request: AgentRequest):
     """Multi-agent supervisor endpoint với conversation memory."""
-    _log.info("Agent request | thread_id=%s | include_steps=%s", request.thread_id, request.include_steps)
+    _log.info(
+        "Agent request | channel=%s | channel_id=%s | user_id=%s | "
+        "thread_id=%s | session_id=%s | include_steps=%s",
+        request.channel,
+        request.channel_id,
+        request.user_id,
+        request.thread_id,
+        request.session_id,
+        request.include_steps,
+    )
 
     if agent_engine is None:
         raise HTTPException(status_code=503, detail="Agent engine not initialized")
@@ -79,7 +88,15 @@ async def agent_endpoint(request: AgentRequest):
         # Lưu lịch sử đầy đủ vào PostgreSQL (best-effort)
         await _save_turn_full(request.thread_id, request.question, answer, all_steps, time_response)
 
-        return AgentResponse(answer=answer, steps=[AgentStep(**s) for s in api_steps])
+        return AgentResponse(
+            user_id=request.user_id,
+            channel=request.channel,
+            channel_id=request.channel_id,
+            thread_id=request.thread_id,
+            session_id=request.session_id,
+            answer=answer,
+            steps=[AgentStep(**s) for s in api_steps],
+        )
 
     except HTTPException:
         raise

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Literal, Optional
 
 
@@ -11,13 +11,22 @@ class AgentStep(BaseModel):
 
 class AgentRequest(BaseModel):
     question: str
-    thread_id: str = "default"   # session ID — LangGraph dùng để load/save checkpoint
+    thread_id: str = "default"   # conversation ID — LangGraph dùng để load/save checkpoint
+    user_id: Optional[str] = None
+    channel: Optional[str] = None
+    channel_id: Optional[str] = None
+    session_id: Optional[str] = None
     include_steps: bool = False
 
 
 class AgentResponse(BaseModel):
+    user_id: Optional[str] = None
+    channel: Optional[str] = None
+    channel_id: Optional[str] = None
+    thread_id: Optional[str] = None
+    session_id: Optional[str] = None
     answer: str
-    steps: List[AgentStep] = []
+    steps: List[AgentStep] = Field(default_factory=list)
 
 
 # ── SSE streaming events ──────────────────────────────────────────────────────
