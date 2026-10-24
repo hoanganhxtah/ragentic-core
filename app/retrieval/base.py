@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 from typing import Any, Optional, Protocol, runtime_checkable
 
 # Sentinel cho ``score_threshold``: giữ lại MỌI hit, không lọc.
-# Dùng -inf thay vì 0.0 vì relevance score của LangChain về lý thuyết có thể âm,
+# Dùng -inf thay vì 0.0 vì relevance score của LangChain có thể âm,
 # nên 0.0 không thực sự nghĩa là "không lọc".
 NO_THRESHOLD: float = float("-inf")
 
