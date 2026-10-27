@@ -38,6 +38,7 @@ def get_chat_model() -> BaseChatModel:
     - openai/openai-compatible (incl. self-host via LLM_BASE_URL)
     - anthropic/claude
     - groq
+    - ollama (local; base URL from LLM_BASE_URL, default localhost:11434)
     - bedrock/aws
 
     Returns:
@@ -98,6 +99,16 @@ def get_chat_model() -> BaseChatModel:
             max_tokens=maxtok,
         )
 
+    if provider == "ollama":
+        from langchain_ollama import ChatOllama
+
+        return ChatOllama(
+            model=model,
+            base_url=llm_settings.BASE_URL or "http://localhost:11434",
+            temperature=temp,
+            num_predict=maxtok,
+        )
+
     if provider in {"bedrock", "aws", "aws-bedrock"}:
         from langchain_aws import ChatBedrockConverse
 
@@ -114,5 +125,5 @@ def get_chat_model() -> BaseChatModel:
     raise ValueError(
         f"Unsupported LLM_PROVIDER for chat model: {provider!r}. "
         "Use: gemini (google) | openai | openai-compatible | anthropic (claude) | "
-        "groq | bedrock (aws)"
+        "groq | ollama | bedrock (aws)"
     )
